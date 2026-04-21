@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bizarre Aquatic Bazaar – Rare Freshwater Creatures</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:       #0d1117;
+      --deep:      #05111e;
+      --teal:      #0a7c6e;
+      --teal-glow: #12b89f;
+      --gold:      #c9a84c;
+      --gold-lt:   #e8cc7a;
+      --mist:      #e8f4f1;
+      --card-bg:   #0e1e2a;
+      --border:    rgba(12,180,160,0.18);
+      --radius:    14px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--deep);
+      color: var(--mist);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── BUBBLES BACKGROUND ── */
+    .bubbles {
+      position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden;
+    }
+    .bubble {
+      position: absolute; bottom: -60px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, rgba(18,184,159,0.3), rgba(18,184,159,0.05));
+      border: 1px solid rgba(18,184,159,0.2);
+      animation: rise linear infinite;
+    }
+    @keyframes rise {
+      0%   { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-110vh) translateX(var(--dx,20px)) scale(0.6); opacity: 0; }
+    }
+
+    /* ── HEADER / NAV ── */
+    header {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: linear-gradient(to bottom, rgba(5,17,30,0.97) 80%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+    nav {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 70px;
+    }
+    .logo-mark {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.1rem;
+      background: linear-gradient(135deg, var(--gold), var(--teal-glow));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--mist); text-decoration: none; font-size: 0.85rem;
+      font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+      opacity: 0.75; transition: opacity 0.2s, color 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--teal-glow); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 60%, rgba(10,124,110,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 20%, rgba(201,168,76,0.08) 0%, transparent 60%),
+        var(--deep);
+    }
+    .hero-eyebrow {
+      font-size: 0.78rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--teal-glow); margin-bottom: 1.2rem; opacity: 0.9;
+    }
+    .hero h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(2.2rem, 6vw, 5rem);
+      line-height: 1.1;
+      background: linear-gradient(160deg, var(--gold-lt) 0%, var(--gold) 40%, var(--teal-glow) 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 1.5rem;
+    }
+    .hero-sub {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.35rem);
+      color: rgba(232,244,241,0.7);
+      max-width: 640px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+    .hero-badges {
+      display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;
+      margin-bottom: 3rem;
+    }
+    .badge {
+      display: flex; align-items: center; gap: 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 0.45rem 1rem;
+      font-size: 0.78rem; letter-spacing: 0.05em;
+      color: rgba(232,244,241,0.7);
+      background: rgba(10,124,110,0.08);
+    }
+    .badge-icon { font-size: 1rem; }
+    .cta-btn {
+      display: inline-block;
+      padding: 0.85rem 2.4rem;
+      border-radius: 100px;
+      background: linear-gradient(135deg, var(--teal), var(--teal-glow));
+      color: #fff; font-weight: 500; font-size: 0.95rem;
+      letter-spacing: 0.04em; text-decoration: none;
+      box-shadow: 0 0 28px rgba(18,184,159,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 0 42px rgba(18,184,159,0.5); }
+
+    /* ── SECTION SHELL ── */
+    section {
+      position: relative; z-index: 1;
+      max-width: 1280px; margin: 0 auto;
+      padding: 5rem 2rem;
+    }
+    .section-label {
+      font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--teal-glow); margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      color: var(--gold-lt);
+      margin-bottom: 0.75rem;
+    }
+    .section-desc {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: rgba(232,244,241,0.6);
+      font-size: 1rem;
+      max-width: 600px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+
+    /* ── CATEGORY TABS ── */
+    .tab-bar {
+      display: flex; flex-wrap: wrap; gap: 0.6rem;
+      margin-bottom: 2.5rem;
+    }
+    .tab-btn {
+      padding: 0.5rem 1.3rem; border-radius: 100px;
+      border: 1px solid var(--border);
+      background: transparent; color: rgba(232,244,241,0.6);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.83rem; font-weight: 500; letter-spacing: 0.05em;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .tab-btn:hover, .tab-btn.active {
+      background: var(--teal); border-color: var(--teal);
+      color: #fff;
+    }
+
+    /* ── PRODUCT GRID ── */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .product-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      cursor: pointer;
+      display: flex; flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(18,184,159,0.18);
+      border-color: rgba(18,184,159,0.45);
+    }
+    .card-img-wrap {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: linear-gradient(135deg, #071520 0%, #0d2535 100%);
+    }
+    .card-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .product-card:hover .card-img-wrap img { transform: scale(1.06); }
+    .card-category {
+      position: absolute; top: 0.75rem; left: 0.75rem;
+      background: rgba(5,17,30,0.8); backdrop-filter: blur(4px);
+      border: 1px solid var(--border);
+      border-radius: 100px; padding: 0.25rem 0.7rem;
+      font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--teal-glow);
+    }
+    .card-body {
+      padding: 1.2rem 1.3rem 1.5rem;
+      flex: 1; display: flex; flex-direction: column; gap: 0.4rem;
+    }
+    .card-common {
+      font-size: 1rem; font-weight: 500; color: var(--mist);
+      line-height: 1.3;
+    }
+    .card-scientific {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.8rem; color: rgba(232,244,241,0.45);
+    }
+    .card-desc {
+      font-size: 0.82rem; color: rgba(232,244,241,0.55);
+      line-height: 1.55; margin-top: 0.3rem; flex: 1;
+    }
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 1rem;
+    }
+    .card-price {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.15rem;
+      color: var(--gold);
+    }
+    .card-btn {
+      padding: 0.4rem 1rem; border-radius: 100px;
+      background: transparent;
+      border: 1px solid var(--teal);
+      color: var(--teal-glow); font-size: 0.78rem;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .card-btn:hover {
+      background: var(--teal); color: #fff;
+    }
+
+    /* ── HIDDEN CATEGORY ── */
+    .product-card[data-cat].hidden { display: none; }
+
+    /* ── INFO STRIP ── */
+    .info-strip {
+      position: relative; z-index: 1;
+      background: linear-gradient(135deg, rgba(10,124,110,0.12), rgba(201,168,76,0.06));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .info-strip-inner {
+      max-width: 1280px; margin: 0 auto;
+      padding: 3.5rem 2rem;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    .info-item { text-align: center; }
+    .info-icon { font-size: 2rem; margin-bottom: 0.75rem; display: block; }
+    .info-item h3 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 0.85rem; color: var(--gold-lt);
+      letter-spacing: 0.06em; margin-bottom: 0.4rem;
+    }
+    .info-item p { font-size: 0.82rem; color: rgba(232,244,241,0.55); line-height: 1.5; }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.2rem;
+      background: linear-gradient(135deg, var(--gold), var(--teal-glow));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 0.75rem;
+    }
+    footer p { font-size: 0.8rem; color: rgba(232,244,241,0.35); line-height: 1.7; }
+    footer a { color: var(--teal-glow); text-decoration: none; }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(5,17,30,0.9); backdrop-filter: blur(6px);
+      align-items: center; justify-content: center; padding: 2rem;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      max-width: 640px; width: 100%;
+      overflow: hidden;
+      animation: pop 0.25s ease;
+    }
+    @keyframes pop { from { transform: scale(0.93); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .modal-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+    .modal-body { padding: 1.8rem; }
+    .modal-body h2 { font-size: 1.35rem; font-weight: 500; color: var(--mist); margin-bottom: 0.3rem; }
+    .modal-body .sci { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.9rem; color: rgba(232,244,241,0.45); margin-bottom: 1rem; }
+    .modal-body p { font-size: 0.88rem; color: rgba(232,244,241,0.65); line-height: 1.65; margin-bottom: 1.2rem; }
+    .modal-footer { display: flex; gap: 1rem; align-items: center; }
+    .modal-price { font-family: 'Cinzel Decorative', serif; font-size: 1.4rem; color: var(--gold); }
+    .modal-close {
+      margin-left: auto; padding: 0.45rem 1.2rem; border-radius: 100px;
+      background: transparent; border: 1px solid rgba(232,244,241,0.2);
+      color: rgba(232,244,241,0.5); cursor: pointer; font-size: 0.82rem; transition: all 0.2s;
+    }
+    .modal-close:hover { border-color: var(--teal); color: var(--teal-glow); }
+    .modal-cta {
+      padding: 0.5rem 1.4rem; border-radius: 100px;
+      background: var(--teal); border: none;
+      color: #fff; font-size: 0.88rem; cursor: pointer; transition: all 0.2s;
+    }
+    .modal-cta:hover { background: var(--teal-glow); }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .logo-mark { font-size: 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Animated bubbles -->
+<div class="bubbles" id="bubbles"></div>
+
+<!-- NAV -->
+<header>
+  <nav>
+    <span class="logo-mark">Bizarre Aquatic Bazaar</span>
+    <ul class="nav-links">
+      <li><a href="#shop">Shop</a></li>
+      <li><a href="#guarantee">Guarantee</a></li>
+      <li><a href="#care">Care Info</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">✦ Rare Freshwater Specimens ✦</p>
+  <h1>Bizarre Aquatic Bazaar</h1>
+  <p class="hero-sub">Exotic crayfish, eels, and pufferfish sourced from the rivers and lakes of the world — delivered alive to your door.</p>
+  <div class="hero-badges">
+    <span class="badge"><span class="badge-icon">🦞</span> Papuan & Indonesian Crayfish</span>
+    <span class="badge"><span class="badge-icon">🐍</span> Rare Spiny Eels</span>
+    <span class="badge"><span class="badge-icon">🐡</span> Freshwater Puffers</span>
+    <span class="badge"><span class="badge-icon">✈️</span> Live Arrival Guarantee</span>
+  </div>
+  <a href="#shop" class="cta-btn">Browse Live Animals</a>
+</div>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-strip-inner">
+    <div class="info-item">
+      <span class="info-icon">🌊</span>
+      <h3>100% Live Arrival</h3>
+      <p>Every shipment backed by our live arrival guarantee. We reship at no cost if anything arrives DOA.</p>
+    </div>
+    <div class="info-item">
+      <span class="info-icon">🌿</span>
+      <h3>Ethically Sourced</h3>
+      <p>Species sourced from responsible breeders and exporters. All animals are legally imported.</p>
+    </div>
+    <div class="info-item">
+      <span class="info-icon">📦</span>
+      <h3>Expert Packaging</h3>
+      <p>Double-bagged, heat-treated, and oxygen-rich packing. Your animals travel in first-class comfort.</p>
+    </div>
+    <div class="info-item">
+      <span class="info-icon">📞</span>
+      <h3>Hobbyist Support</h3>
+      <p>Questions before or after your order? We're keepers too — reach out anytime.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SHOP -->
+<section id="shop">
+  <p class="section-label">Live Animals</p>
+  <h2 class="section-title">Current Stock</h2>
+  <p class="section-desc">Rare and unusual freshwater species, imported and ready to ship. Stock changes — order while available.</p>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="filterCat('all', this)">All Species</button>
+    <button class="tab-btn" onclick="filterCat('crayfish', this)">🦞 Crayfish</button>
+    <button class="tab-btn" onclick="filterCat('eel', this)">🐍 Spiny Eels</button>
+    <button class="tab-btn" onclick="filterCat('puffer', this)">🐡 Pufferfish</button>
+  </div>
+
+  <div class="product-grid" id="product-grid">
+    <!-- Populated by JS -->
+  </div>
+</section>
+
+<!-- CARE / GUARANTEE -->
+<section id="guarantee" style="padding-top:2rem;">
+  <p class="section-label">Our Promise</p>
+  <h2 class="section-title">Live Arrival Guarantee</h2>
+  <p class="section-desc">We stand behind every animal we ship. If your order arrives with any DOA specimens, contact us within 2 hours of delivery with clear photos. We will reship the affected animals at no charge on your next order.</p>
+</section>
+
+<section id="care" style="padding-top:1rem;">
+  <p class="section-label">Husbandry</p>
+  <h2 class="section-title">Care Information</h2>
+  <p class="section-desc">All our animals come with a detailed care sheet. Crayfish generally prefer stable, well-oxygenated water (pH 7.0–8.0, 68–78°F). Spiny eels need soft substrate to burrow. Puffers thrive in heavily planted tanks with plenty of hiding spots. Reach out with any specific questions before ordering.</p>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="padding-top:1rem; padding-bottom:3rem;">
+  <p class="section-label">Get In Touch</p>
+  <h2 class="section-title">Contact Us</h2>
+  <p class="section-desc">Ready to order, or have a question about a species? Email us at <a href="mailto:info@bizarreaquatics.com" style="color:var(--teal-glow); text-decoration:none;">info@bizarreaquatics.com</a> or visit us at <strong style="color:var(--mist);">www.bizarreaquatics.com</strong>.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p class="footer-logo">Bizarre Aquatic Bazaar</p>
+  <p>Centennial, CO 80122 · <a href="mailto:info@bizarreaquatics.com">info@bizarreaquatics.com</a> · <a href="https://www.bizarreaquatics.com">www.bizarreaquatics.com</a></p>
+  <p style="margin-top:0.5rem;">© 2026 Bizarre Aquatic Bazaar LLC. All rights reserved.</p>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal">
+    <img class="modal-img" id="modal-img" src="" alt="">
+    <div class="modal-body">
+      <h2 id="modal-name"></h2>
+      <p class="sci" id="modal-sci"></p>
+      <p id="modal-desc"></p>
+      <div class="modal-footer">
+        <span class="modal-price" id="modal-price"></span>
+        <button class="modal-cta" onclick="inquire()">Inquire to Order</button>
+        <button class="modal-close" onclick="closeModalDirect()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── PRODUCT DATA ──
+const products = [
+  // CRAYFISH
+  { id:1,  cat:'crayfish', common:'Arguni Creamy Blue Crayfish',           sci:'Cherax arguni',               price:17,  desc:'A stunning Papuan crayfish with creamy ivory and electric blue coloration. Peaceful, suitable for species tanks or with large fish. Reaches 4–5 inches.', img:'imgs/cherax_arguni.svg' },
+  { id:2,  cat:'crayfish', common:'Tricolor Blue Moon Crayfish',           sci:'Cherax boesemani spp.',        price:10,  desc:'Famous for its bold tricolor pattern of blue, white, and red. One of the most visually striking Cherax available to hobbyists.', img:'imgs/cherax_boesemani.svg' },
+  { id:3,  cat:'crayfish', common:'Devil Crayfish',                        sci:'Cherax bomberai',             price:17,  desc:'Dark and dramatic, the Devil Crayfish sports deep maroon-black tones with subtle iridescent highlights. A true showstopper in any tank.', img:'imgs/cherax_bomberai.svg' },
+  { id:4,  cat:'crayfish', common:'Blue Papuan Crayfish',                  sci:'Cherax communis',             price:15,  desc:'One of the most sought-after blue crayfish from the Bird\'s Head Peninsula of New Guinea. Vivid solid blue coloration, hardy and adaptable.', img:'imgs/cherax_communis.svg' },
+  { id:5,  cat:'crayfish', common:'Doberai Blue Crayfish',                 sci:'Cherax doberai',              price:17,  desc:'Originating from the Doberai Peninsula, this species displays a rich cobalt blue with subtle patterning. Moderately peaceful.', img:'imgs/cherax_doberai.svg' },
+  { id:6,  cat:'crayfish', common:'Indigo Black Scorpion Crayfish',        sci:'Cherax holthuisi spp.',       price:12,  desc:'Named for its dark indigo and black coloration and intimidating claws. A head-turning species for the serious collector.', img:'imgs/cherax_holthuisi.svg' },
+  { id:7,  cat:'crayfish', common:'Kaimana Crayfish',                      sci:'Cherax kaimana',              price:17,  desc:'From the Kaimana region of West Papua. Beautiful pastel-blue and white tones, rarely seen in the hobby. A collector\'s gem.', img:'imgs/cherax_kaimana.svg' },
+  { id:8,  cat:'crayfish', common:'Misol Island Blue Lightning Crayfish',  sci:'Cherax misolicus',            price:17,  desc:'Named for the vivid lightning-like blue stripes across its carapace. Native to Misol Island, one of the Raja Ampat group.', img:'imgs/cherax_misolicus.svg' },
+  { id:9,  cat:'crayfish', common:'Peacock Crayfish',                      sci:'Cherax niglin',               price:17,  desc:'Iridescent emerald and teal tones give this crayfish an almost peacock-like shimmer. Stunning under aquarium lighting.', img:'imgs/cherax_niglin.svg' },
+  { id:10, cat:'crayfish', common:'Orange King Kong Crayfish',             sci:'Cherax pallidus',             price:12,  desc:'Brilliant deep orange coloration from head to tail. Compact, bold, and one of the most eye-catching Cherax in the hobby.', img:'imgs/cherax_pallidus.svg' },
+  { id:11, cat:'crayfish', common:'Green Hornet Crayfish',                 sci:'Cherax phing',                price:12,  desc:'Bright yellow-green with dark banding, the Green Hornet lives up to its name. An energetic, active species.', img:'imgs/cherax_phing.svg' },
+  { id:12, cat:'crayfish', common:'Thunderbolt Crayfish',                  sci:'Cherax pulcher',              price:12,  desc:'One of the most recently described Cherax species, featuring bold striped patterns. Highly sought after by collectors worldwide.', img:'imgs/cherax_pulcher.svg' },
+  { id:13, cat:'crayfish', common:'Tiger Crayfish',                        sci:'Cherax rayko',                price:12,  desc:'Dark striping over a rich base color gives this species its tiger moniker. Bold and inquisitive in the aquarium.', img:'imgs/cherax_rayko.svg' },
+  { id:14, cat:'crayfish', common:'Blue Marron Crayfish',                  sci:'Cherax tenuimanus spp.',      price:16,  desc:'The Blue Marron is among the largest Cherax species, capable of reaching 10+ inches. Brilliant blue coloration intensifies with age.', img:'imgs/cherax_tenuimanus.svg' },
+  { id:15, cat:'crayfish', common:'Veritas Amethyst Crayfish',             sci:'Cherax veritas',              price:17,  desc:'Deep purple-amethyst tones make this one of the most regal crayfish available. A rare find even in specialist collections.', img:'imgs/cherax_veritas.svg' },
+  { id:16, cat:'crayfish', common:'Veritas Blue Crayfish',                 sci:'Cherax veritas spp.',         price:17,  desc:'A blue color variant of the Cherax veritas complex. Slightly more vibrant blue tones distinguish it from its amethyst cousin.', img:'imgs/cherax_veritas_blue.svg' },
+  { id:17, cat:'crayfish', common:'Woworae Crayfish',                      sci:'Cherax woworae',              price:17,  desc:'A rare West Papuan species with complex mottled patterning in earthy tones. Named after the local Woworae people of the region.', img:'imgs/cherax_woworae.svg' },
+  // EELS
+  { id:18, cat:'eel', common:'Frecklefin Eel',      sci:'Macrognathus maculatus',           price:3.5,  desc:'A small, spotted spiny eel perfect for nano and mid-sized tanks. Peaceful and easy to keep; loves to burrow in fine sand.', img:'imgs/macrognathus_maculatus.svg' },
+  { id:19, cat:'eel', common:'Black Pearly Eel',    sci:'Mastacembelus notophthalmus',      price:20,   desc:'Jet-black body adorned with iridescent white pearl-like spots. One of the most striking spiny eels available; a true centerpiece species.', img:'imgs/mastacembelus_notophthalmus.svg' },
+  { id:20, cat:'eel', common:'Tapir Spiny Eel',     sci:'Macrognathus tapirus',             price:2.5,  desc:'Named for its long, tapir-like snout. A small, affordable, and charming spiny eel that is active and fun to watch.', img:'imgs/macrognathus_tapirus.svg' },
+  { id:21, cat:'eel', common:'Tire Track Eel',      sci:'Mastacembelus favus',              price:10,   desc:'Classic zigzag patterning resembling a tire tread runs the full length of this popular spiny eel. Grows to 18–24 inches; a staple of the hobby.', img:'imgs/mastacembelus_favus.svg' },
+  { id:22, cat:'eel', common:'Unicolor Spiny Eel',  sci:'Mastacembelus unicolor',           price:10,   desc:'Elegant solid-brown coloration with a slender, graceful profile. Excellent for larger planted tanks or species-only setups.', img:'imgs/mastacembelus_unicolor.svg' },
+  { id:23, cat:'eel', common:'Zig-Zag Eel',         sci:'Mastacembelus armatus',            price:5,    desc:'A popular, hardy spiny eel with bold zig-zag lateral patterning. Tolerant of a range of conditions; great for beginners to the group.', img:'imgs/mastacembelus_armatus.svg' },
+  { id:24, cat:'eel', common:'Java Pipefish',        sci:'Syngnathidae sp. Java',            price:2.5,  desc:'A remarkable freshwater pipefish from Java. Closely related to seahorses, it moves with a unique hovering motion. Best kept in a species-only tank.', img:'imgs/syngnathidae_java.svg' },
+  // PUFFERS
+  { id:25, cat:'puffer', common:'Avocado Pufferfish',        sci:'Auriglobus modestus',              price:3.5,  desc:'Small, round, and avocado-green. The avocado puffer is a characterful dwarf species with big personality in a small package.', img:'imgs/auriglobus_modestus.svg' },
+  { id:26, cat:'puffer', common:'Golden Pufferfish',          sci:'Auriglobus silus',                 price:4,    desc:'Metallic golden-yellow body with subtle spotting. A nano puffer that\'s endlessly entertaining — curious, bold, and fun to feed.', img:'imgs/auriglobus_silus.svg' },
+  { id:27, cat:'puffer', common:'Red-Tail Dwarf Puffer',     sci:'Carinotetraodon irrubesco',        price:0.75, desc:'One of the most affordable freshwater puffers. Males display beautiful red tails. Best kept in a species tank with dense planting.', img:'imgs/carinotetraodon_irrubesco.svg' },
+  { id:28, cat:'puffer', common:'Humpback Puffer',            sci:'Tetraodon palembangensis',         price:5,    desc:'A large, striking puffer with a distinctive humped back and bold patterning. An unusual oddball that commands attention in any aquarium.', img:'imgs/tetraodon_palembangensis.svg' },
+  { id:29, cat:'puffer', common:'Eyespot Puffer',             sci:'Tetraodon biocellatus',            price:1,    desc:'Named for the vivid eyespot markings on its dorsal fin. A small, hardy figure-eight relative — active and personality-packed.', img:'imgs/tetraodon_biocellatus.svg' },
+];
+
+// ── RENDER ──
+function renderProducts(list) {
+  const grid = document.getElementById('product-grid');
+  grid.innerHTML = list.map(p => `
+    <div class="product-card" data-cat="${p.cat}" onclick="openModal(${p.id})">
+      <div class="card-img-wrap">
+        <img src="${p.img}" alt="${p.common}" onerror="this.src='imgs/placeholder.svg'">
+        <span class="card-category">${catLabel(p.cat)}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-common">${p.common}</div>
+        <div class="card-scientific">${p.sci}</div>
+        <div class="card-desc">${p.desc.substring(0,90)}…</div>
+        <div class="card-footer">
+          <span class="card-price">$${p.price.toFixed(2)}</span>
+          <button class="card-btn">View Details</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function catLabel(c) {
+  return { crayfish:'🦞 Crayfish', eel:'🐍 Spiny Eel', puffer:'🐡 Pufferfish' }[c] || c;
+}
+
+renderProducts(products);
+
+// ── FILTER ──
+function filterCat(cat, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const cards = document.querySelectorAll('.product-card');
+  cards.forEach(c => {
+    c.classList.toggle('hidden', cat !== 'all' && c.dataset.cat !== cat);
+  });
+}
+
+// ── MODAL ──
+function openModal(id) {
+  const p = products.find(x => x.id === id);
+  document.getElementById('modal-img').src = p.img;
+  document.getElementById('modal-img').onerror = function(){ this.src='imgs/placeholder.svg'; };
+  document.getElementById('modal-name').textContent = p.common;
+  document.getElementById('modal-sci').textContent = p.sci;
+  document.getElementById('modal-desc').textContent = p.desc;
+  document.getElementById('modal-price').textContent = '$' + p.price.toFixed(2) + ' each';
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal(e) {
+  if (e.target === document.getElementById('modal')) closeModalDirect();
+}
+function closeModalDirect() {
+  document.getElementById('modal').classList.remove('open');
+}
+function inquire() {
+  const name = document.getElementById('modal-name').textContent;
+  window.location.href = `mailto:info@bizarreaquatics.com?subject=Order Inquiry: ${encodeURIComponent(name)}`;
+}
+
+// ── BUBBLES ──
+(function(){
+  const wrap = document.getElementById('bubbles');
+  for(let i=0; i<22; i++){
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    const sz = 8 + Math.random()*28;
+    b.style.cssText = `
+      width:${sz}px; height:${sz}px;
+      left:${Math.random()*100}%;
+      --dx:${(Math.random()-0.5)*80}px;
+      animation-duration:${8+Math.random()*18}s;
+      animation-delay:${Math.random()*12}s;
+    `;
+    wrap.appendChild(b);
+  }
+})();
+</script>
+</body>
+</html>
