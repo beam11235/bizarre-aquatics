@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="75%">
+      <stop offset="0%" stop-color="#080e08"/>
+      <stop offset="100%" stop-color="#040804"/>
+    </radialGradient>
+    <radialGradient id="body" cx="40%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#608848"/>
+      <stop offset="100%" stop-color="#2a4020"/>
+    </radialGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="5" stdDeviation="8" flood-color="#000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  <rect width="400" height="300" fill="url(#bg)"/>
+  <!-- Plants background -->
+  <ellipse cx="30" cy="220" rx="14" ry="70" fill="rgba(20,80,50,0.45)" transform="rotate(-10,30,220)"/>
+  <ellipse cx="370" cy="230" rx="12" ry="60" fill="rgba(20,80,50,0.35)" transform="rotate(10,370,230)"/>
+  <!-- Shadow -->
+  <ellipse cx="200" cy="252" rx="80" ry="14" fill="rgba(0,0,0,0.35)"/>
+  <!-- Tail fin -->
+  <ellipse cx="310" cy="150" rx="22" ry="35" fill="rgba(80,180,80,0.6)" opacity="0.7" transform="rotate(15,310,150)"/>
+  <!-- Body -->
+  <ellipse cx="185" cy="150" rx="95" ry="80" fill="url(#body)" filter="url(#shadow)"/>
+  <!-- Belly (lighter) -->
+  <ellipse cx="185" cy="175" rx="75" ry="45" fill="#608848" opacity="0.3"/>
+  <!-- Dorsal fin -->
+  <ellipse cx="170" cy="72" rx="30" ry="15" fill="rgba(80,180,80,0.6)" opacity="0.65" transform="rotate(-5,170,72)"/>
+  <!-- Pectoral fins -->
+  <ellipse cx="115" cy="155" rx="18" ry="10" fill="rgba(80,180,80,0.6)" opacity="0.55" transform="rotate(-20,115,155)"/>
+  <ellipse cx="115" cy="165" rx="16" ry="9" fill="rgba(80,180,80,0.6)" opacity="0.45" transform="rotate(15,115,165)"/>
+  <!-- Spots -->
+  <circle cx="160" cy="130" r="9" fill="rgba(20,60,20,0.5)" opacity="0.6"/>
+  <circle cx="195" cy="120" r="7" fill="rgba(20,60,20,0.5)" opacity="0.5"/>
+  <circle cx="225" cy="135" r="8" fill="rgba(20,60,20,0.5)" opacity="0.55"/>
+  <circle cx="170" cy="158" r="6" fill="rgba(20,60,20,0.5)" opacity="0.45"/>
+  <circle cx="210" cy="165" r="7" fill="rgba(20,60,20,0.5)" opacity="0.5"/>
+  <circle cx="240" cy="150" r="5" fill="rgba(20,60,20,0.5)" opacity="0.4"/>
+  <circle cx="145" cy="155" r="5" fill="rgba(20,60,20,0.5)" opacity="0.4"/>
+  <!-- Head / snout -->
+  <ellipse cx="95" cy="145" rx="35" ry="28" fill="#608848" opacity="0.85"/>
+  <!-- Mouth (puffer beak) -->
+  <rect x="64" y="148" width="16" height="8" rx="3" fill="rgba(80,60,40,0.8)"/>
+  <!-- Eye (large) -->
+  <circle cx="90" cy="132" r="14" fill="#1a1a1a"/>
+  <circle cx="90" cy="132" r="10" fill="#2a1a0a"/>
+  <circle cx="86" cy="128" r="3.5" fill="rgba(255,255,255,0.75)"/>
+  <circle cx="88" cy="130" r="1" fill="rgba(255,255,255,0.9)"/>
+  <!-- Spines hint -->
+  <line x1="140" y1="72" x2="135" y2="60" stroke="#2a4020" stroke-width="1.5" opacity="0.5"/>
+  <line x1="175" y1="68" x2="173" y2="55" stroke="#2a4020" stroke-width="1.5" opacity="0.5"/>
+  <line x1="210" y1="75" x2="212" y2="62" stroke="#2a4020" stroke-width="1.5" opacity="0.5"/>
+  <!-- Highlight -->
+  <ellipse cx="165" cy="118" rx="30" ry="16" fill="rgba(255,255,255,0.07)" transform="rotate(-10,165,118)"/>
+  <!-- Bubbles -->
+  <circle cx="50" cy="60" r="5" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/>
+  <circle cx="340" cy="50" r="3" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>
+  <circle cx="80" cy="180" r="4" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+</svg>
